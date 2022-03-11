@@ -20,6 +20,39 @@ void HopperDisk::rotate_disk(uint8_t steps){
      *  Returns:
      *      None
      */
+    
+    #include <Stepper.h>
+    const int stepsPerRevolution = 200;// change to fit number of steps per revolution for motor
+    #define stepperDirA 2
+    #define stepperStepA 3
+
+
+    int count = 0;
+
+    void setup() {
+    
+    Serial.begin(9600);
+    pinMode(stepperDirA, OUTPUT);
+    pinMode(stepperStepA, OUTPUT);
+    digitalWrite(stepperDirA,LOW); //LOW = CCW HIGH = CW
+
+}
+
+    void loop() {
+
+       while (count < 950 ){    // SPIN if UNbroken
+        digitalWrite(stepperStepA, HIGH);
+        //digitalWrite(stepperStepB, HIGH);
+        delayMicroseconds(400);
+        digitalWrite(stepperStepA, LOW);
+        //digitalWrite(stepperStepB, LOW);
+        delayMicroseconds(400); //range of delay 500- 1200 fast motor to slow; 1350 seems alright 4000 seems okay for disk
+        count++;
+        }
+
+    }
+
+    
     this->_disk.step(steps);
     DEBUG.println("HopperDisk.cpp: Rotating disk...");
 }
